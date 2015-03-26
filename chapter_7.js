@@ -6,13 +6,46 @@ function Main_sample_4 () {
 		return elem1.concat(elem2);
 	}));
 
-	console.log(Eevery([NaN, NaN, NaN], isNaN));
-	console.log(Eevery([NaN, NaN, 4], isNaN));
-	console.log(Ssome([3, NaN, 4], isNaN));
-	console.log(Ssome([2, 3, 4], isNaN));
+	ageBetweenMotherAndChild();
+	// middleAgeForCentury();
+
+	console.log(every([NaN, NaN, NaN], isNaN));
+	console.log(every([NaN, NaN, 4], isNaN));
+	console.log(some([3, NaN, 4], isNaN));
+	console.log(some([2, 3, 4], isNaN));
 }
 
-function Eevery(array, func){
+function ageBetweenMotherAndChild(){
+	var ancestry = JSON.parse(ANCESTRY_FILE);
+
+	var byName = {};
+
+	ancestry.forEach(function(person) {
+		byName[person.name] = person;
+	});
+
+	var ageBetween = [];
+
+	ancestry.forEach(function(person){
+		if (byName[person.mother] !== undefined)
+			ageBetween.push(person.born - byName[person.mother].born);
+	});
+
+	console.log(average(ageBetween));
+}
+
+function middleAgeForCentury(){
+	var ancestry = JSON.parse(ANCESTRY_FILE);
+
+	
+}
+
+function average(array) {
+	function plus(a, b) { return a + b; }
+	return array.reduce(plus) / array.length;
+}
+
+function every(array, func){
 	
 	for (var i = 0; i < array.length; i++) {
 		if (!func(array[i])) {
@@ -24,7 +57,7 @@ function Eevery(array, func){
 
 }
 
-function Ssome(array, func){
+function some(array, func){
 
 	for (var i = 0; i < array.length; i++) {
 		if (func(array[i])) {
