@@ -7,7 +7,7 @@ function Main_sample_4 () {
 	}));
 
 	ageBetweenMotherAndChild();
-	// middleAgeForCentury();
+	middleAgeForCentury();
 
 	console.log(every([NaN, NaN, NaN], isNaN));
 	console.log(every([NaN, NaN, 4], isNaN));
@@ -37,7 +37,32 @@ function ageBetweenMotherAndChild(){
 function middleAgeForCentury(){
 	var ancestry = JSON.parse(ANCESTRY_FILE);
 
-	
+	var mapCentury = {};
+
+	ancestry.forEach(function(person){
+		if (mapCentury[Math.ceil(person.died/100)] === undefined) {
+			mapCentury[Math.ceil(person.died/100)] = [];
+			mapCentury[Math.ceil(person.died/100)].push(person.died - person.born);
+		}else{
+			mapCentury[Math.ceil(person.died/100)].push(person.died - person.born);
+		}
+	});
+
+	for (var elem in mapCentury) {
+		console.log(elem + ":", average(mapCentury[elem]));
+	}
+}
+
+function groupBy(array, func){
+	var map = {};
+
+	for (var i = 0; i < array.length; i++) {
+		// array[i]
+
+		//ToDo
+	}
+
+	return map;
 }
 
 function average(array) {
